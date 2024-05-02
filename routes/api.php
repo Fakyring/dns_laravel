@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\EquipmentsController;
+use App\Http\Controllers\Api\TypesController;
 use App\Http\Controllers\Api\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
     Route::apiResource('users', UsersController::class);
+    Route::apiResource('types', TypesController::class);
+    Route::apiResource('eqs', EquipmentsController::class);
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
