@@ -41,7 +41,7 @@ class UsersController extends Controller {
     public function destroy(Users $user) {
         if (!auth()->user() || (auth()->user()->id_user !== $user->id_user && auth()->user()->role != 1))
             return response()->json(["data" => "У вас недостаточно прав"], 403);
-        $user->delete();
+        $user->update(['status' => !$user->status]);
         return response()->noContent();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Users;
 use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
@@ -25,6 +26,8 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
+        if (Users::where('email', $credentials['email'])->first()->status == 0)
+            return response()->json(['error' => 'Unauthorized'], 401);
         if (!$token = auth("api")->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

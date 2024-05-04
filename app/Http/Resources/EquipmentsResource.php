@@ -16,12 +16,14 @@ class EquipmentsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'ID' => $this->id_eq,
-            'Name' => $this->name,
-            'Type' => Types::where('id_type', $this->type)->first()->name,
-            'Description' => strlen($this->descr) == 0 ? "Описания нет" : $this->descr,
-            'Count' => $this->count,
-            'Price' => $this->price
+            'id' => $this->id_eq,
+            'name' => $this->name,
+            'id_type' => $this->type,
+            'type' => Types::where('id_type', $this->type)->first()->name,
+            'descr' => strlen($this->descr) == 0 ? "Описания нет" : $this->descr,
+            'count' => $this->count,
+            'price' => $this->price,
+            'image' => $this->image
         ];
     }
 }

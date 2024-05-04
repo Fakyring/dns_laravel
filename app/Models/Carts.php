@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Equipments extends Model {
+class Carts extends Model
+{
     use HasFactory;
 
     public $timestamps = false;
-    protected $table = "equipments";
-    protected $primaryKey = "id_eq";
+    protected $table = "carts";
+    protected $primaryKey = "id_cart";
     protected $fillable = [
+        'id_user',
         'id_eq',
-        'name',
-        'type',
-        'descr',
-        'count',
-        'price',
-        'image'
+        'count'
     ];
 }
