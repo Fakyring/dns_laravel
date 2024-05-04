@@ -5,16 +5,15 @@ namespace App\Http\Resources;
 use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
-class EquipmentsResource extends JsonResource
-{
+class EquipmentsResource extends JsonResource {
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
-    {
+    public function toArray(Request $request): array {
         return [
             'id' => $this->id_eq,
             'name' => $this->name,
@@ -23,7 +22,7 @@ class EquipmentsResource extends JsonResource
             'descr' => strlen($this->descr) == 0 ? "Описания нет" : $this->descr,
             'count' => $this->count,
             'price' => $this->price,
-            'image' => $this->image
+            'image' => "http://" . Storage::url($this->image)
         ];
     }
 }

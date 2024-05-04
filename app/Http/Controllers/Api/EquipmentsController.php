@@ -17,7 +17,7 @@ class EquipmentsController extends Controller {
         if (!auth()->user() || auth()->user()->role == 0)
             return response()->json(['data' => "Недостаточно прав"], 403);
         $imageName = $equipment->image->store('public');
-        $eq = Equipments::create($equipment->validated() + ["image" => asset(Storage::url($imageName))]);
+        $eq = Equipments::create($equipment->validated() + ["image" => $imageName]);
         return $eq;
     }
 
@@ -32,13 +32,20 @@ class EquipmentsController extends Controller {
     public function update(EquipmentsRequest $request, Equipments $equipment) {
         if (!auth()->user() || auth()->user()->role == 0)
             return response()->json(["data" => "У вас недостаточно прав"], 403);
-        $equipment->update($request->validated());
+        if ($request->image) {
+            Storage::delete($equipment->image);
+            $imageName = $request->image->store('public');
+            $equipment->update($request->validated() + ["image" => $imageName]);
+        } else {
+            $equipment->update($request->validated());
+        }
         return EquipmentsResource::make($equipment);
     }
 
     public function destroy(Equipments $equipment) {
         if (!auth()->user() || auth()->user()->role == 0)
             return response()->json(["data" => "У вас недостаточно прав"], 403);
+        Storage::delete($equipment->image);
         $equipment->delete();
         return response()->noContent();
     }

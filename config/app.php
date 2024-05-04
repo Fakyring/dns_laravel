@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'west-pulling.gl.at.ply.gg:9130'),
 
     'asset_url' => env('ASSET_URL'),
 
