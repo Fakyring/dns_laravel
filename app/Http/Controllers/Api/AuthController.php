@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Users;
 use Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth;
 
 class AuthController extends Controller
 {
