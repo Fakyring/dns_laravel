@@ -21,18 +21,23 @@ class CartsController extends Controller {
             return response()->json(['data' => 'На складе нет такого количества товара'], 400);
         if (!auth()->user())
             return response()->json(['data' => 'Вы не авторизованы'], 403);
-        $crt = Carts::create($cart->validated() + ["id_user" => auth()->user()->id_user]);
+        $crt = Carts::where("id_eq", $cart->id_eq)->where("id_user", auth()->user()->id_user)->first();
+        if ($crt) {
+            $crt->update(['count' => $crt->count + $cart->count]);
+        } else {
+            $crt = Carts::create($cart->validated() + ["id_user" => auth()->user()->id_user]);
+        }
         $eq = Equipments::where("id_eq", $cart->id_eq)->first();
         $eq->update(['count' => $eq->count - $cart->count]);
         return $crt;
     }
 
-    public function show($id) {
-        $cart = Carts::where("id_cart", $id)->first();
+    public function show() {
+        $cart = Carts::where("id_user", auth()->user()->id_user)->get();
         if (!$cart) {
             return response()->json(['data' => "Такой корзины нет"], 404);
         }
-        return CartsResource::make($cart);
+        return CartsResource::collection($cart);
     }
 
     public function update(CartsRequest $request, Carts $cart) {

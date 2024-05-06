@@ -23,9 +23,9 @@ class EquipmentsRequest extends FormRequest {
             return [
                 'name' => 'required|string|max:50|min:10',
                 'type' => 'required|int|exists:types,id_type',
-                'descr' => 'string|max:1000',
-                'count' => 'required|int|min:0|max:999999',
-                'price' => 'required|decimal:0,2|min:0|max:9999999'
+                'descr' => 'string|max:500',
+                'count' => 'required|int|min:1|max:999999',
+                'price' => 'required|decimal:0,2|min:1|max:9999999'
             ];
         } else {
             return [

@@ -22,7 +22,7 @@ class EquipmentsResource extends JsonResource {
             'descr' => strlen($this->descr) == 0 ? "Описания нет" : $this->descr,
             'count' => $this->count,
             'price' => $this->price,
-            'image' => "http://" . Storage::url($this->image)
+            'image' => Storage::url($this->image)
         ];
     }
 }
