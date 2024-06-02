@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class EquipmentsController extends Controller {
     public function index() {
-        return EquipmentsResource::collection(Equipments::all());
+        return EquipmentsResource::collection(Equipments::where("count", "<>", 0)->get());
     }
 
     public function store(EquipmentsRequest $equipment) {
@@ -32,7 +32,7 @@ class EquipmentsController extends Controller {
     public function update(EquipmentsRequest $request, Equipments $equipment) {
         if (!auth()->user() || auth()->user()->role == 0)
             return response()->json(["data" => "У вас недостаточно прав"], 403);
-        if ($request->image) {
+        if ($request->hasFile('image')) {
             Storage::delete($equipment->image);
             $imageName = $request->image->store('public');
             $equipment->update($request->validated() + ["image" => $imageName]);
